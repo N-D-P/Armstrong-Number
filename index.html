@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<script>
+      //Function to calculate power of x raise to y
+      function power(x, y)
+      {
+        if (y != 0)
+            return (x * power(x, y - 1));
+        else
+            return 1;
+      }
+
+      //Function to calculate digits of number
+      function digits(x)
+      {
+          let n = 0;
+          while (x != 0)
+          {
+              n++;
+              x = parseInt(x / 10, 10);
+          }
+          return n;
+      }
+
+      //Function to calculate if a given number is Armstong or not
+      function Armstrong(x)
+      {
+
+        let n = digits(x);
+        let temp = x, sum = 0;
+        while (temp != 0)
+        {
+            let r = temp % 10;
+            sum = sum + power(r, n);
+            temp = parseInt(temp / 10, 10);
+        }
+
+        return (sum == x);
+      }
+
+      // to calculate start time
+      var start = new Date().getTime();
+
+      //Main Function
+      function main()
+      {
+
+          let x = Number(document.getElementById("N").value);
+
+          if(x<=0){
+            document.write("Please enter a valid number");
+            return;
+          }
+
+          let flag = Armstrong(x);
+
+          if (flag){
+            document.write('The given number i.e. '+x+' is Armstrong </br>');
+            // to calculate end time
+            var end = new Date().getTime();
+            var time = end - start;
+            document.write('Execution time: ' + time+' milliseconds'+'</br>');
+
+            //calculate memory
+            const used = process.memoryUsage().heapUsed / 1024 / 1024;
+            console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
+          }
+          else //if the given number is not Armstong
+          {
+              // look for other Armstong number that is immediate greater than that
+            for(let i = x+1; i <= Number.MAX_SAFE_INTEGER; i++)
+            {
+
+                flag = Armstrong(i);
+                if(flag)
+                {
+                  document.write(' Armstrong number higher then  '+x+' is : '+i+'</br>');
+                  break;
+                }
+            }
+
+              // look for other Armstong number that is immediate smaller than that
+            for(let j = x-1;j >=1; j--)
+            {
+
+              flag = Armstrong(j);
+              if(flag)
+              {
+                document.write(' Armstrong number higher then  '+x+' is : '+j+'</br>');
+                break;
+              }
+            }
+            // to calculate end time
+            var end = new Date().getTime();
+            var time = end - start;
+            document.write('Execution time: ' + time+' milliseconds'+'</br>');
+          }
+      }
+    </script>
+	</head>
+
+
+
+	<body>
+    <br>
+		<h1>Whether a number is Armstrong or not</h1>
+		Enter The Number :<input type="text" name="num" id = "N"/>
+		<hr color="cyan">
+		<br>
+		<center><button onClick="main()">CHECK</button>
+	</body>
+</html>
